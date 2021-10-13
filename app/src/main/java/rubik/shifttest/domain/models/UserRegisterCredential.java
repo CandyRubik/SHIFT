@@ -1,4 +1,4 @@
-package rubik.shifttest.domain.data;
+package rubik.shifttest.domain.models;
 
 import java.io.Serializable;
 

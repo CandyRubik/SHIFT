@@ -1,4 +1,4 @@
-package rubik.shifttest;
+package rubik.shifttest.presentation;
 
 import android.os.Bundle;
 
@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import rubik.shifttest.domain.data.UserRegisterCredential;
+import rubik.shifttest.R;
+import rubik.shifttest.domain.models.UserRegisterCredential;
 
 public class GreetingFragment extends Fragment {
 
     private UserRegisterCredential userRegisterCredential;
+    private static final String USER_KEY = "UserObj";
+    private static final String DIALOG_TAG = "dialog";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +33,7 @@ public class GreetingFragment extends Fragment {
         Bundle args = getArguments();
 
         if(args != null) {
-            userRegisterCredential = (UserRegisterCredential) args.getSerializable("UserObj");
+            userRegisterCredential = (UserRegisterCredential) args.getSerializable(USER_KEY);
         } else {
             userRegisterCredential = null;
         }
@@ -43,6 +46,6 @@ public class GreetingFragment extends Fragment {
 
     private void openDialog() {
         GreetingDialog greetingDialog = new GreetingDialog(userRegisterCredential.getFirstName());
-        greetingDialog.show(getParentFragmentManager(), "dialog");
+        greetingDialog.show(getParentFragmentManager(), DIALOG_TAG);
     }
 }
