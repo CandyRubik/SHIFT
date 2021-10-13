@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+
+import rubik.shifttest.domain.data.UserRegisterCredential;
 
 public class GreetingFragment extends Fragment {
 
-    private String message;
+    private UserRegisterCredential userRegisterCredential;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,11 +30,19 @@ public class GreetingFragment extends Fragment {
         Bundle args = getArguments();
 
         if(args != null) {
-            message = args.getString("Message");
+            userRegisterCredential = (UserRegisterCredential) args.getSerializable("UserObj");
         } else {
-            message = "No message was transmitted";
+            userRegisterCredential = null;
         }
-        TextView greeting = view.findViewById(R.id.greeting_text);
-        greeting.setText(message);
+
+        Button button = view.findViewById(R.id.open_dialog);
+        button.setOnClickListener(buttonView -> {
+            openDialog();
+        });
+    }
+
+    private void openDialog() {
+        GreetingDialog greetingDialog = new GreetingDialog(userRegisterCredential.getFirstName());
+        greetingDialog.show(getParentFragmentManager(), "dialog");
     }
 }
