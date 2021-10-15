@@ -7,15 +7,15 @@ import rubik.shifttest.domain.repository.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private UserStorage mUserStorage;
+    private UserStorage userStorage;
 
     public UserRepositoryImpl(UserStorage userStorage) {
-        mUserStorage = userStorage;
+        this.userStorage = userStorage;
     }
 
     @Override
     public boolean saveUserRegisterCredential(UserRegisterCredential userRegisterCredential) {
-        return mUserStorage.saveUser(mapToData(userRegisterCredential));
+        return userStorage.saveUser(mapToData(userRegisterCredential));
     }
 
     /**
@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public UserRegisterCredential getUserRegisterCredential() {
-        return mapToDomain(mUserStorage.getUser());
+        return mapToDomain(userStorage.getUser());
     }
 
     private UserRegisterCredential mapToDomain(User user) {

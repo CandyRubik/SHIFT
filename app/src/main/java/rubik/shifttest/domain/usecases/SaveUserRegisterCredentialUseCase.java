@@ -5,13 +5,13 @@ import rubik.shifttest.domain.repository.UserRepository;
 
 public class SaveUserRegisterCredentialUseCase {
 
-    private UserRepository mRepository;
+    private UserRepository repository;
 
     public SaveUserRegisterCredentialUseCase(UserRepository repository) {
-        mRepository = repository;
+        this.repository = repository;
     }
 
     public boolean execute(UserRegisterCredential userRegisterCredential) {
-        return mRepository.saveUserRegisterCredential(userRegisterCredential);
+        return repository.saveUserRegisterCredential(userRegisterCredential);
     }
 }
