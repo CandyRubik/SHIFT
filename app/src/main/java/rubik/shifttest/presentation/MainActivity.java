@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import rubik.shifttest.R;
-import rubik.shifttest.data.storage.sharedprefs.SharedPrefUserStorage;
+import com.rubik.shifttest.data.data.storage.sharedprefs.SharedPrefUserStorage;
 
 public class MainActivity extends AppCompatActivity {
 
