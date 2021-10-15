@@ -12,13 +12,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import rubik.shifttest.R;
+import rubik.shifttest.data.repository.UserRepositoryImpl;
+import rubik.shifttest.data.storage.sharedprefs.SharedPrefUserStorage;
 import rubik.shifttest.domain.models.UserRegisterCredential;
+import rubik.shifttest.domain.usecases.GetUserRegisterCredentialUseCase;
 
 public class GreetingFragment extends Fragment {
 
-    private UserRegisterCredential userRegisterCredential;
-    private static final String USER_KEY = "UserObj";
+    private UserRegisterCredential mUserRegisterCredential;
+    private SharedPrefUserStorage mSharedPrefUserStorage;
+    private UserRepositoryImpl mUserRepositoryImpl;
+    private GetUserRegisterCredentialUseCase mGetUserRegisterCredentialUseCase;
     private static final String DIALOG_TAG = "dialog";
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,22 +37,19 @@ public class GreetingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle args = getArguments();
-
-        if(args != null) {
-            userRegisterCredential = (UserRegisterCredential) args.getSerializable(USER_KEY);
-        } else {
-            userRegisterCredential = null;
-        }
-
         Button button = view.findViewById(R.id.open_dialog);
         button.setOnClickListener(buttonView -> {
             openDialog();
         });
+
+        mSharedPrefUserStorage = new SharedPrefUserStorage(requireActivity().getApplicationContext());
+        mUserRepositoryImpl = new UserRepositoryImpl(mSharedPrefUserStorage);
+        mGetUserRegisterCredentialUseCase = new GetUserRegisterCredentialUseCase(mUserRepositoryImpl);
+        mUserRegisterCredential = mGetUserRegisterCredentialUseCase.execute();
     }
 
     private void openDialog() {
-        GreetingDialog greetingDialog = new GreetingDialog(userRegisterCredential.getFirstName());
+        GreetingDialog greetingDialog = new GreetingDialog(mUserRegisterCredential.getFirstName());
         greetingDialog.show(getParentFragmentManager(), DIALOG_TAG);
     }
 }

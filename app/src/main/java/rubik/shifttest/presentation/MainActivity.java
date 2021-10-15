@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import rubik.shifttest.R;
+import rubik.shifttest.data.storage.sharedprefs.SharedPrefUserStorage;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String SIGN_UP_FRAGMENT_TAG = "signUpFragment";
+    private static final String GREETING_FRAGMENT_TAG = "greetingFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +23,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SignUpFragment signUpFragment = new SignUpFragment();
-        fragmentTransaction.add(R.id.fragment_container, signUpFragment, SIGN_UP_FRAGMENT_TAG);
-        fragmentTransaction.commit();
+        SharedPreferences sharedPrefs = getSharedPreferences(SharedPrefUserStorage.SHARED_PREFS_USER_REGISTER_CREDENTIAL, MODE_PRIVATE);
+        if(sharedPrefs.contains(SharedPrefUserStorage.KEY_USER_REGISTER_CREDENTIAL)) {
+            GreetingFragment greetingFragment = new GreetingFragment();
+            fragmentTransaction.add(R.id.fragment_container, greetingFragment, GREETING_FRAGMENT_TAG);
+            fragmentTransaction.commit();
+        } else {
+            SignUpFragment signUpFragment = new SignUpFragment();
+            fragmentTransaction.add(R.id.fragment_container, signUpFragment, SIGN_UP_FRAGMENT_TAG);
+            fragmentTransaction.commit();
+        }
     }
 }
