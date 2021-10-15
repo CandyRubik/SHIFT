@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import rubik.shifttest.R;
+import rubik.shifttest.presentation.greeting.GreetingFragment;
+import rubik.shifttest.presentation.signup.SignUpFragment;
+
 import com.rubik.shifttest.data.data.storage.sharedprefs.SharedPrefUserStorage;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPrefs.contains(SharedPrefUserStorage.KEY_USER_REGISTER_CREDENTIAL)) {
             GreetingFragment greetingFragment = new GreetingFragment();
             fragmentTransaction.add(R.id.fragment_container, greetingFragment, GREETING_FRAGMENT_TAG);
-            fragmentTransaction.commit();
         } else {
             SignUpFragment signUpFragment = new SignUpFragment();
             fragmentTransaction.add(R.id.fragment_container, signUpFragment, SIGN_UP_FRAGMENT_TAG);
-            fragmentTransaction.commit();
         }
+        fragmentTransaction.commit();
     }
 }

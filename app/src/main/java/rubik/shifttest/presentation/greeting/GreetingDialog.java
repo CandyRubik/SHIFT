@@ -1,4 +1,4 @@
-package rubik.shifttest.presentation;
+package rubik.shifttest.presentation.greeting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
