@@ -20,16 +20,16 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 
 import rubik.shifttest.R;
-import rubik.shifttest.data.repository.UserRepositoryImpl;
-import rubik.shifttest.data.storage.sharedprefs.SharedPrefUserStorage;
-import rubik.shifttest.domain.models.UserRegisterCredential;
-import rubik.shifttest.domain.usecases.EqualValidator;
-import rubik.shifttest.domain.usecases.SaveUserRegisterCredentialUseCase;
-import rubik.shifttest.domain.usecases.ValidateDateUseCase;
-import rubik.shifttest.domain.usecases.ValidateEqualsPasswordsUseCase;
-import rubik.shifttest.domain.usecases.ValidateFirstNameUseCase;
-import rubik.shifttest.domain.usecases.ValidateLastNameUseCase;
-import rubik.shifttest.domain.usecases.Validator;
+import com.rubik.shifttest.data.data.repository.UserRepositoryImpl;
+import com.rubik.shifttest.data.data.storage.sharedprefs.SharedPrefUserStorage;
+import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.domain.usecases.EqualValidator;
+import com.rubik.shifttest.domain.domain.usecases.SaveUserRegisterCredentialUseCase;
+import com.rubik.shifttest.domain.domain.usecases.ValidateDateUseCase;
+import com.rubik.shifttest.domain.domain.usecases.ValidateEqualsPasswordsUseCase;
+import com.rubik.shifttest.domain.domain.usecases.ValidateFirstNameUseCase;
+import com.rubik.shifttest.domain.domain.usecases.ValidateLastNameUseCase;
+import com.rubik.shifttest.domain.domain.usecases.Validator;
 
 public class SignUpFragment extends Fragment {
 

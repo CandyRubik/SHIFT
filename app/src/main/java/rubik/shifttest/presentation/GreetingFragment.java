@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import rubik.shifttest.R;
-import rubik.shifttest.data.repository.UserRepositoryImpl;
-import rubik.shifttest.data.storage.sharedprefs.SharedPrefUserStorage;
-import rubik.shifttest.domain.models.UserRegisterCredential;
-import rubik.shifttest.domain.usecases.GetUserRegisterCredentialUseCase;
+import com.rubik.shifttest.data.data.repository.UserRepositoryImpl;
+import com.rubik.shifttest.data.data.storage.sharedprefs.SharedPrefUserStorage;
+import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.domain.usecases.GetUserRegisterCredentialUseCase;
 
 public class GreetingFragment extends Fragment {
 
