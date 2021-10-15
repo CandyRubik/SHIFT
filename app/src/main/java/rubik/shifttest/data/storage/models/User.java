@@ -1,17 +1,31 @@
-package rubik.shifttest.domain.models;
+package rubik.shifttest.data.storage.models;
 
-import java.io.Serializable;
-
-public class UserRegisterCredential implements Serializable {
+public class User {
     private String firstName;
     private String lastName;
     private String bornDate;
     private String password;
 
-    public UserRegisterCredential(String firstName, String lastName, String bornDate, String password) {
+    public User(String firstName, String lastName, String bornDate, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.bornDate = bornDate;
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBornDate(String bornDate) {
+        this.bornDate = bornDate;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -30,5 +44,4 @@ public class UserRegisterCredential implements Serializable {
     public String getPassword() {
         return password;
     }
-
 }
