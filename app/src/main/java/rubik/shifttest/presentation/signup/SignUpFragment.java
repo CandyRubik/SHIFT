@@ -1,10 +1,12 @@
-package rubik.shifttest.presentation;
+package rubik.shifttest.presentation.signup;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.InputType;
@@ -20,20 +22,14 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 
 import rubik.shifttest.R;
-import com.rubik.shifttest.data.data.repository.UserRepositoryImpl;
-import com.rubik.shifttest.data.data.storage.sharedprefs.SharedPrefUserStorage;
+import rubik.shifttest.presentation.greeting.GreetingFragment;
+
 import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
 import com.rubik.shifttest.domain.domain.usecases.EqualValidator;
-import com.rubik.shifttest.domain.domain.usecases.SaveUserRegisterCredentialUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateDateUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateEqualsPasswordsUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateFirstNameUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateLastNameUseCase;
 import com.rubik.shifttest.domain.domain.usecases.Validator;
 
 public class SignUpFragment extends Fragment {
 
-    private static final String USER_KEY = "UserObj";
     private static final String GREETING_FRAGMENT_TAG = "greetingFragment";
     private static final String DATE_PICKER_TAG = "datePicker";
     private static final String FIELDS_ERROR_MESSAGE = "Make sure that all fields are not red";
@@ -59,20 +55,12 @@ public class SignUpFragment extends Fragment {
     private TextInputLayout mRePasswordTextInputLayout;
     private EditText mRePasswordEditText;
 
-    private ValidateFirstNameUseCase mValidateFirstNameUseCase;
-    private ValidateLastNameUseCase mValidateLastNameUseCase;
-    private ValidateDateUseCase mValidateDateUseCase;
-    private ValidateEqualsPasswordsUseCase mValidatePasswordsUseCase;
+    private boolean isFirstNameCorrect;
+    private boolean isLastNameCorrect;
+    private boolean isPasswordsEquals;
+    private boolean isDateCorrect;
 
-    private UserRepositoryImpl mUserRepositoryImpl;
-    private SharedPrefUserStorage mSharedPrefUserStorage;
-    private SaveUserRegisterCredentialUseCase mSaveUserRegisterCredentialUseCase;
-
-
-    private boolean mIsFirstNameCorrect = false;
-    private boolean mIsLastNameCorrect = false;
-    private boolean mIsPasswordsEquals = false;
-    private boolean mIsDateCorrect = false;
+    private SIgnUpViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,23 +72,34 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(requireActivity(),
+                new SignUpViewModelFactory(requireActivity()))
+                .get(SIgnUpViewModel.class);
+
         mSignUpButton = view.findViewById(R.id.sign_up_button);
         mSignUpButton.setEnabled(false);
+
+        viewModel.getIsFirstNameCorrect().observe(requireActivity(), aBoolean -> isFirstNameCorrect = aBoolean);
+
+        viewModel.getIsLastNameCorrect().observe(requireActivity(), aBoolean -> isLastNameCorrect = aBoolean);
+
+        viewModel.getIsDateCorrect().observe(requireActivity(), aBoolean -> isDateCorrect = aBoolean);
+
+        viewModel.getIsPasswordsEquals().observe(requireActivity(), aBoolean -> isPasswordsEquals = aBoolean);
+
         setButtonListener();
 
         mFirstNameTextInputLayout = view.findViewById(R.id.first_name_text_input_layout);
         mFirstNameEditText = view.findViewById(R.id.first_name_text_input_edit_text);
 
-        mValidateFirstNameUseCase = new ValidateFirstNameUseCase();
-        setFirstNameChangeTextListener(mValidateFirstNameUseCase);
+
+        setFirstNameChangeTextListener();
 
 
         mLastNameTextInputLayout = view.findViewById(R.id.last_name_text_input_layout);
         mLastNameEditText = view.findViewById(R.id.last_name_text_input_edit_text);
 
-        mValidateLastNameUseCase = new ValidateLastNameUseCase();
-        setLastNameChangeTextListener(mValidateLastNameUseCase);
-
+        setLastNameChangeTextListener();
 
         mDatePickerTextInputLayout = view.findViewById(R.id.date_picker_input_layout);
         mDatePickerEditText = view.findViewById(R.id.date_picker_input_edit_text);
@@ -116,35 +115,30 @@ public class SignUpFragment extends Fragment {
 
         materialDatePicker.addOnPositiveButtonClickListener(selection -> mDatePickerEditText.setText(materialDatePicker.getHeaderText()));
 
-        mValidateDateUseCase = new ValidateDateUseCase();
-        setDateChangeTextListener(mValidateDateUseCase);
+        setDateChangeTextListener();
 
         mPasswordEditText = view.findViewById(R.id.password_input_edit_text);
 
         mRePasswordTextInputLayout = view.findViewById(R.id.re_password_text_input_layout);
         mRePasswordEditText = view.findViewById(R.id.re_password_input_edit_text);
 
-        mValidatePasswordsUseCase = new ValidateEqualsPasswordsUseCase();
-        setPasswordsEqualsTextListener(mValidatePasswordsUseCase);
+        setPasswordsEqualsTextListener();
 
-        mSharedPrefUserStorage = new SharedPrefUserStorage(requireActivity().getApplicationContext());
-        mUserRepositoryImpl = new UserRepositoryImpl(mSharedPrefUserStorage);
-        mSaveUserRegisterCredentialUseCase = new SaveUserRegisterCredentialUseCase(mUserRepositoryImpl);
+
     }
 
     private void setButtonListener () {
         mSignUpButton.setOnClickListener(buttonView -> {
-            if(mIsFirstNameCorrect
-                && mIsLastNameCorrect
-                && mIsDateCorrect
-                && mIsPasswordsEquals) {
+            if(isFirstNameCorrect
+                && isLastNameCorrect
+                && isPasswordsEquals
+                && isDateCorrect) {
                     GreetingFragment greetingFragment = new GreetingFragment();
-                UserRegisterCredential userRegisterCredential = new UserRegisterCredential(mFirstNameEditText.getText().toString(),
+                    UserRegisterCredential userRegisterCredential = new UserRegisterCredential(mFirstNameEditText.getText().toString(),
                                                                 mLastNameEditText.getText().toString(),
                                                                 mDatePickerEditText.getText().toString(),
                                                                 mRePasswordEditText.getText().toString());
-
-                    mSaveUserRegisterCredentialUseCase.execute(userRegisterCredential);
+                    viewModel.saveUserRegisterCredentialUseCase(userRegisterCredential);
                     requireActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, greetingFragment, GREETING_FRAGMENT_TAG)
                             .addToBackStack(null)
@@ -157,7 +151,7 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    private void setFirstNameChangeTextListener(Validator validator) {
+    private void setFirstNameChangeTextListener() {
         mFirstNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -166,23 +160,22 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (validator.execute(charSequence)) {
-                    mIsFirstNameCorrect = true;
+                viewModel.validateFirstNameUseCase(charSequence);
+                if (isFirstNameCorrect) {
                     mFirstNameTextInputLayout.setError(null);
                 } else {
-                    mIsFirstNameCorrect = false;
                     mFirstNameTextInputLayout.setError(FIRST_NAME_INCORRECT);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mSignUpButton.setEnabled(mIsFirstNameCorrect);
+                mSignUpButton.setEnabled(isButtonAvailable());
             }
         });
     }
 
-    private void setLastNameChangeTextListener(Validator validator) {
+    private void setLastNameChangeTextListener() {
         mLastNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -191,23 +184,22 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (validator.execute(charSequence)) {
-                    mIsLastNameCorrect = true;
+                viewModel.validateLastNameUseCase(charSequence);
+                if (isLastNameCorrect) {
                     mLastNameTextInputLayout.setError(null);
                 } else {
-                    mIsLastNameCorrect = false;
                     mLastNameTextInputLayout.setError(SignUpFragment.LAST_NAME_INCORRECT);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mSignUpButton.setEnabled(mIsLastNameCorrect);
+                mSignUpButton.setEnabled(isButtonAvailable());
             }
         });
     }
 
-    private void setDateChangeTextListener(Validator validator) {
+    private void setDateChangeTextListener() {
         mDatePickerEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -216,23 +208,22 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (validator.execute(charSequence)) {
-                    mIsDateCorrect = true;
+                viewModel.validateDateUseCase(charSequence);
+                if (isDateCorrect) {
                     mDatePickerTextInputLayout.setError(null);
                 } else {
-                    mIsDateCorrect = false;
                     mDatePickerTextInputLayout.setError(SignUpFragment.DATE_INCORRECT);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mSignUpButton.setEnabled(mIsDateCorrect);
+                mSignUpButton.setEnabled(isButtonAvailable());
             }
         });
     }
 
-    private void setPasswordsEqualsTextListener(EqualValidator validator) {
+    private void setPasswordsEqualsTextListener() {
         mRePasswordEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -241,23 +232,28 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (validator.execute(charSequence, mPasswordEditText.getText())) {
-                    mIsPasswordsEquals = true;
+                viewModel.validateEqualsPasswordsUseCase(charSequence, mPasswordEditText.getText());
+                if (charSequence.toString().isEmpty()) {
                     mRePasswordTextInputLayout.setError(null);
-                } else if (charSequence.toString().isEmpty()) {
+                } else if (isPasswordsEquals) {
                     mRePasswordTextInputLayout.setError(null);
-                    mIsPasswordsEquals = false;
                 } else {
-                    mIsPasswordsEquals = false;
                     mRePasswordTextInputLayout.setError(SignUpFragment.PASSWORDS_INCORRECT);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mSignUpButton.setEnabled(mIsPasswordsEquals);
+                mSignUpButton.setEnabled(isButtonAvailable());
             }
         });
+    }
+
+    private boolean isButtonAvailable() {
+        return isFirstNameCorrect
+                && isLastNameCorrect
+                && isPasswordsEquals
+                && isDateCorrect;
     }
 
 }
