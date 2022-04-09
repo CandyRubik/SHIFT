@@ -1,10 +1,10 @@
-package com.rubik.shifttest.domain.domain.usecases;
+package com.rubik.shifttest.domain.usecases;
 
-import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
-import com.rubik.shifttest.domain.domain.repository.UserRepository;
+import com.rubik.shifttest.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.repository.UserRepository;
 
 public class GetUserRegisterCredentialUseCase {
-    private UserRepository repository;
+    private final UserRepository repository;
 
     public GetUserRegisterCredentialUseCase(UserRepository repository) {
         this.repository = repository;

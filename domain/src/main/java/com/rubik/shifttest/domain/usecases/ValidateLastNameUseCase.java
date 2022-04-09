@@ -1,7 +1,7 @@
-package com.rubik.shifttest.domain.domain.usecases;
+package com.rubik.shifttest.domain.usecases;
 
 
-public class ValidateLastNameUseCase implements Validator {
+public class  ValidateLastNameUseCase implements Validator {
     private static final String LAST_NAME_REGEX = "[a-zA-z]+([ '-][a-zA-Z]+)*";
 
     @Override

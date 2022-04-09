@@ -4,24 +4,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
-import com.rubik.shifttest.domain.domain.usecases.SaveUserRegisterCredentialUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateDateUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateEqualsPasswordsUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateFirstNameUseCase;
-import com.rubik.shifttest.domain.domain.usecases.ValidateLastNameUseCase;
+import com.rubik.shifttest.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.usecases.SaveUserRegisterCredentialUseCase;
+import com.rubik.shifttest.domain.usecases.ValidateDateUseCase;
+import com.rubik.shifttest.domain.usecases.ValidateEqualsPasswordsUseCase;
+import com.rubik.shifttest.domain.usecases.ValidateFirstNameUseCase;
+import com.rubik.shifttest.domain.usecases.ValidateLastNameUseCase;
 
 public class SIgnUpViewModel extends ViewModel {
-    private ValidateFirstNameUseCase validateFirstNameUseCase;
-    private ValidateLastNameUseCase validateLastNameUseCase;
-    private ValidateDateUseCase validateDateUseCase;
-    private ValidateEqualsPasswordsUseCase validateEqualsPasswordsUseCase;
-    private SaveUserRegisterCredentialUseCase saveUserRegisterCredentialUseCase;
+    private final ValidateFirstNameUseCase validateFirstNameUseCase;
+    private final ValidateLastNameUseCase validateLastNameUseCase;
+    private final ValidateDateUseCase validateDateUseCase;
+    private final ValidateEqualsPasswordsUseCase validateEqualsPasswordsUseCase;
+    private final SaveUserRegisterCredentialUseCase saveUserRegisterCredentialUseCase;
 
-    private MutableLiveData<Boolean> isFirstNameCorrect;
-    private MutableLiveData<Boolean>  isLastNameCorrect;
-    private MutableLiveData<Boolean>  isPasswordsEquals;
-    private MutableLiveData<Boolean>  isDateCorrect;
+    private final MutableLiveData<Boolean> isFirstNameCorrect;
+    private final MutableLiveData<Boolean>  isLastNameCorrect;
+    private final MutableLiveData<Boolean>  isPasswordsEquals;
+    private final MutableLiveData<Boolean>  isDateCorrect;
 
 
     public SIgnUpViewModel(ValidateFirstNameUseCase validateFirstNameUseCase,
