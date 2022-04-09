@@ -1,13 +1,6 @@
 package rubik.shifttest.presentation.signup;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -18,15 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
+import com.rubik.shifttest.domain.models.UserRegisterCredential;
 
 import rubik.shifttest.R;
 import rubik.shifttest.presentation.greeting.GreetingFragment;
-
-import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
-import com.rubik.shifttest.domain.domain.usecases.EqualValidator;
-import com.rubik.shifttest.domain.domain.usecases.Validator;
 
 public class SignUpFragment extends Fragment {
 

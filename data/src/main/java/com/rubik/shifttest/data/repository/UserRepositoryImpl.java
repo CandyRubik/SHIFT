@@ -1,13 +1,13 @@
 package com.rubik.shifttest.data.data.repository;
 
-import com.rubik.shifttest.data.data.storage.models.User;
 import com.rubik.shifttest.data.data.storage.UserStorage;
-import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
-import com.rubik.shifttest.domain.domain.repository.UserRepository;
+import com.rubik.shifttest.data.data.storage.models.User;
+import com.rubik.shifttest.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.repository.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private UserStorage userStorage;
+    private final UserStorage userStorage;
 
     public UserRepositoryImpl(UserStorage userStorage) {
         this.userStorage = userStorage;

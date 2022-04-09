@@ -1,12 +1,12 @@
-package com.rubik.shifttest.domain.domain.models;
+package com.rubik.shifttest.domain.models;
 
 import java.io.Serializable;
 
 public class UserRegisterCredential implements Serializable {
-    private String firstName;
-    private String lastName;
-    private String bornDate;
-    private String password;
+    private final String firstName;
+    private final String lastName;
+    private final String bornDate;
+    private final String password;
 
     public UserRegisterCredential(String firstName, String lastName, String bornDate, String password) {
         this.firstName = firstName;

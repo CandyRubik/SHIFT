@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.rubik.shifttest.domain.domain.models.UserRegisterCredential;
-import com.rubik.shifttest.domain.domain.usecases.GetUserRegisterCredentialUseCase;
+import com.rubik.shifttest.domain.models.UserRegisterCredential;
+import com.rubik.shifttest.domain.usecases.GetUserRegisterCredentialUseCase;
 
 public class GreetingViewModel extends ViewModel {
 
-    private GetUserRegisterCredentialUseCase getUserRegisterCredentialUseCase;
-    private MutableLiveData<UserRegisterCredential> userRegisterCredentialLive;
+    private final GetUserRegisterCredentialUseCase getUserRegisterCredentialUseCase;
+    private final MutableLiveData<UserRegisterCredential> userRegisterCredentialLive;
 
     public GreetingViewModel(GetUserRegisterCredentialUseCase getUserRegisterCredentialUseCase) {
         this.getUserRegisterCredentialUseCase = getUserRegisterCredentialUseCase;

@@ -1,4 +1,4 @@
-package com.rubik.shifttest.domain.domain.usecases;
+package com.rubik.shifttest.domain.usecases;
 
 public class ValidateDateUseCase implements Validator {
 

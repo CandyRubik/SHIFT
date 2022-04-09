@@ -13,12 +13,10 @@ public class SharedPrefUserStorage implements UserStorage {
 
     public static final String SHARED_PREFS_USER_REGISTER_CREDENTIAL = "user_register_credential";
     public static final String KEY_USER_REGISTER_CREDENTIAL = "key_user_register_credential";
-    private final Context context;
     private final SharedPreferences sharedPreferences;
 
     public SharedPrefUserStorage(Context context) {
-        this.context = context;
-        sharedPreferences = this.context.getSharedPreferences(SHARED_PREFS_USER_REGISTER_CREDENTIAL, android.content.Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFS_USER_REGISTER_CREDENTIAL, android.content.Context.MODE_PRIVATE);
     }
     @Override
     public boolean saveUser(User user) {
