@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/nav_graph_application"
+	app:startDestination="@id/registrationFragment">
+
+	<fragment
+		android:id="@+id/registrationFragment"
+		android:name="ru.rubik.registration.ui.RegistrationFragment"
+		android:label="RegistrationFragment">
+		<deepLink
+			android:id="@+id/deepLink"
+			app:uri="app://registration" />
+		<action
+			android:id="@+id/action_registrationFragment_to_greetingFragment"
+			app:destination="@id/greetingFragment"
+			app:launchSingleTop="true"
+			app:popUpTo="@+id/nav_graph_application"
+			app:popUpToInclusive="true" />
+	</fragment>
+	<fragment
+		android:id="@+id/greetingFragment"
+		android:name="ru.rubik.greeting.ui.GreetingFragment"
+		android:label="GreetingFragment">
+		<deepLink
+			android:id="@+id/deepLink2"
+			app:uri="app://greeting" />
+	</fragment>
+</navigation>

@@ -1,0 +1,13 @@
+<resources>
+	<string name="app_name">ShiftTest</string>
+	<string name="sign_up">SIGN UP</string>
+	<string name="first_name">First name</string>
+	<string name="last_name">Last name</string>
+	<string name="pick_date">Input your date of birth DD/MM/YY</string>
+	<string name="enter_password">Password</string>
+	<string name="repeat_password">Repeat password</string>
+	<string name="date_error">Write the date of birth</string>
+	<string name="first_name_error">The date is empty</string>
+	<string name="last_name_error">The last name is incorrect</string>
+	<string name="passwords_error">The passwords are not equal</string>
+</resources>

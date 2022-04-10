@@ -4,9 +4,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(Dependencies.GRADLE)
-        classpath(Dependencies.Kotlin.KOTLIN)
-    }
+		classpath(Dependencies.GRADLE)
+		classpath(Dependencies.Kotlin.KOTLIN)
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
+	}
 }
 
 allprojects {
