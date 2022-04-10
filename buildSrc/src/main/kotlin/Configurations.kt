@@ -50,6 +50,7 @@ fun configureAndroidLibraryModule(project: Project) {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables.useSupportLibrary = true
             javaCompileOptions.annotationProcessorOptions.arguments += Settings.roomIncrementalSettings
+            viewBinding.isEnabled = true
         }
         setBuildTypes()
         setJavaVersion()
